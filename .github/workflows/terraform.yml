@@ -67,7 +67,13 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-
+         #Az login 
+    - name: Install Az
+       run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    - name: Az login
+       run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+    - name: az show
+       run: az account show
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
