@@ -70,10 +70,10 @@ jobs:
     # Az login 
     - name: Install Az
       run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    #- name: Az login
-      #run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-    #- name: az show
-      #run: az account show
+    - name: Az login
+      run: az login --allow-no-subscriptions --service-principal -u "485f45e2-a017-4b10-bd25-f1476ea05be1" -p "***REMOVED***" --tenant "051f26d8-2bfb-447a-a6b2-d04a33c5afa6"
+    - name: az show
+      run: az account show
     
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
