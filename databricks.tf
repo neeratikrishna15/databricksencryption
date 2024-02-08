@@ -14,9 +14,8 @@ resource "azurerm_databricks_workspace" "example" {
   tags = {
     Environment = "Production"
   }
+  managed_disk_cmk_rotation_to_latest_version_enabled = true
 }
-
-
 /* resource "azurerm_databricks_workspace_root_dbfs_customer_managed_key" "SSDataBricksManagedServicesKey" {
   workspace_id     = azurerm_databricks_workspace.SSDataBricks.id
   key_vault_key_id = azurerm_key_vault_key.DatabricksDBFSKey.id
