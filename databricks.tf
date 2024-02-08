@@ -10,7 +10,7 @@ resource "azurerm_databricks_workspace" "example" {
   depends_on = [ azurerm_key_vault_access_policy.example2 ]
   //managed_services_cmk_key_vault_key_id               = azurerm_key_vault_key.DatabricksManagedServicesKey.id
   //managed_disk_cmk_key_vault_key_id                   = azurerm_key_vault_key.DatabricksClusterDiskKey.id
-  managed_disk_cmk_rotation_to_latest_version_enabled = true
+  #managed_disk_cmk_rotation_to_latest_version_enabled = true
   tags = {
     Environment = "Production"
   }
