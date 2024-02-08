@@ -48,7 +48,7 @@ resource "azurerm_key_vault_access_policy" "example2" {
   object_id    = "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d"
 
   key_permissions = [
-      "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy",
+      "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy",
       
     ]
 
