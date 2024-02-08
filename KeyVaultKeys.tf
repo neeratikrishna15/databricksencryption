@@ -31,7 +31,6 @@
 #   key_vault_id = azurerm_key_vault.databricks_keyvault.id
 #   key_type     = "RSA"
 #   key_size     = 4096
-
 #   rotation_policy {
 #     automatic {
 #       time_before_expiry = "P7D"
