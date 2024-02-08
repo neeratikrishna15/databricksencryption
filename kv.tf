@@ -64,7 +64,7 @@ resource "azurerm_key_vault_access_policy" "example" {
 
   key_permissions = [
     "Get",
-    "list",
+    "List",
   ]
 
   secret_permissions = [
