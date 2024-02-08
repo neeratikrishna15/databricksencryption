@@ -80,12 +80,22 @@ resource "azurerm_key_vault_access_policy" "example2" {
   key_permissions = [
     "Get",
     "List",
-    "decrypt",
-    "encrypt",
-    "sign",
-    "unwrapKey",
-    "verify",
-    "wrapKey",
+    "Update",
+    "Create",
+    "Import",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore",
+    "Decrypt",
+    "Encrypt",
+    "UnwrapKey",
+    "WrapKey",
+    "Verify",
+    "Sign",
+    "Purge",
+    "Release",
+    "Rotate",
   ]
 
   secret_permissions = [
