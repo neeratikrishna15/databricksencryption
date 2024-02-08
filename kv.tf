@@ -23,7 +23,10 @@ resource "azurerm_key_vault" "example" {
       "Recover",
       "Update",
       "GetRotationPolicy",
-      "SetRotationPolicy"
+      "SetRotationPolicy",
+      "Wrap",
+      "Unwrap",
+      
     ]
 
     secret_permissions = [
