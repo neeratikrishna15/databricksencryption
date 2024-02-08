@@ -55,7 +55,7 @@
 
 resource "azurerm_key_vault_key" "DatabricksManagedServicesKey" {
   name         = "DatabricksManagedServicesKey"
-  key_vault_id = azurerm_key_vault.databricks_keyvault.id
+  key_vault_id = azurerm_key_vault.example.id
   key_type     = "RSA"
   key_size     = 4096
 
