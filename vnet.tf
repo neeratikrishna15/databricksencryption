@@ -19,34 +19,40 @@ resource "azurerm_subnet" "dbs-public" {
     name = "databricks"
     service_delegation {
       name    = "Microsoft.Databricks/workspaces"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action",
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+      "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+      "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action",
+                                        ]
     }
   }
-}
+  }
+
 
 resource "azurerm_subnet" "dbs-private" {
   name                 = "dbs-private"
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.200.5.0/24"]
-  
+  service_endpoints   = ["Microsoft.Storage", "Microsoft.KeyVault"]
+  delegation {
+    name = "databricks"
+    service_delegation {
+      name    = "Microsoft.Databricks/workspaces"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action",
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+      "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+      "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action",
+                                        ]
+    }
+  }
 
 }
 resource "azurerm_network_security_group" "defaulfnsg" {
   name = "dbs-nsg"
   resource_group_name = azurerm_resource_group.example.name
   location = azurerm_resource_group.example.location
-  security_rule {
-    name                       = "SSH"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+  
   
   
 }
