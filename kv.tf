@@ -14,7 +14,7 @@ resource "azurerm_key_vault" "example" {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     ip_rules                   = module.optum-external.tower_ips
-    virtual_network_subnet_ids = [,module.subnet_databricks_private.id]
+    virtual_network_subnet_ids = [module.subnet_databricks_private.id]
   
   }
 
