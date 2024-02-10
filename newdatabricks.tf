@@ -5,6 +5,8 @@ resource "azurerm_databricks_workspace" "workspac02" {
   sku                 = "premium"
   public_network_access_enabled = true
   managed_resource_group_name   = "rg-managed-dbw-ds01"
+    customer_managed_key_enabled  = true
+    managed_services_cmk_key_vault_key_id = azurerm_key_vault_key.DatabricksManagedServicesKey.id
   
   custom_parameters {
     virtual_network_id                                   = azurerm_virtual_network.example.id
