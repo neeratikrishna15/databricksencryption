@@ -17,7 +17,7 @@ resource "azurerm_databricks_workspace" "workspac02" {
     no_public_ip                                         = true
     storage_account_name                                 = null
     storage_account_sku_name                             = null
-    virtual_network_address_space                        = null
+    virtual_network_address_space                        = azurerm_virtual_network.example.address_space
     vnet_address_prefix                                  = null
   
   }
