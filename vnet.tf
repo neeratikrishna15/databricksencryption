@@ -15,7 +15,13 @@ resource "azurerm_subnet" "dbs-public" {
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.200.4.0/24"]
-
+  delegation {
+    name = "databricks"
+    service_delegation {
+      name    = "Microsoft.Databricks/workspaces"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
 }
 
 resource "azurerm_subnet" "dbs-private" {
@@ -23,7 +29,13 @@ resource "azurerm_subnet" "dbs-private" {
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.200.5.0/24"]
-  
+  delegation {
+    name = "databricks"
+    service_delegation {
+      name    = "Microsoft.Databricks/workspaces"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
 
 }
 resource "azurerm_network_security_group" "defaulfnsg" {
