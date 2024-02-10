@@ -43,14 +43,11 @@ resource "azurerm_network_security_group" "defaulfnsg" {
   }
   
 }
-resource "azurerm_subnet_network_security_group_association "public" {
- 
-  subnet_id = azurerm_subnet.dbs-public.id
+resource "azurerm_subnet_network_security_group_association" "databricks_private" {
+  subnet_id                 = azurerm_subnet.dbs-private.id
   network_security_group_id = azurerm_network_security_group.defaulfnsg.id
-  
 }
-resource "azurerm_subnet_network_security_group_association "private" {
-  subnet_id = azurerm_subnet.dbs-private.id
+resource "azurerm_subnet_network_security_group_association" "databricks_public" {
+  subnet_id                 = azurerm_subnet.dbs-public.id
   network_security_group_id = azurerm_network_security_group.defaulfnsg.id
-  
 }
