@@ -10,13 +10,7 @@ resource "azurerm_key_vault" "example" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "premium"
   soft_delete_retention_days = 7
-  network_acls {
-    default_action             = "Deny"
-    bypass                     = "AzureServices"
-    ip_rules                   = module.optum-external.tower_ips
-    virtual_network_subnet_ids = [module.subnet_databricks_private.id]
   
-  }
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
