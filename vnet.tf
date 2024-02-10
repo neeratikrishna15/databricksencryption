@@ -26,3 +26,31 @@ resource "azurerm_subnet" "dbs-private" {
   
 
 }
+resource "azurerm_network_security_group" "defaulfnsg" {
+  name = "dbs-nsg"
+  resource_group_name = azurerm_resource_group.example.name
+  location = azurerm_resource_group.example.location
+  security_rule {
+    name                       = "SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+  
+}
+resource "azurerm_subnet_network_security_group_association "public" {
+ 
+  subnet_id = azurerm_subnet.dbs-public.id
+  network_security_group_id = azurerm_network_security_group.defaulfnsg.id
+  
+}
+resource "azurerm_subnet_network_security_group_association "private" {
+  subnet_id = azurerm_subnet.dbs-private.id
+  network_security_group_id = azurerm_network_security_group.defaulfnsg.id
+  
+}
