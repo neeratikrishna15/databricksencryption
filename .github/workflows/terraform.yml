@@ -84,7 +84,11 @@ jobs:
     - name: Terraform Init
       run: terraform init
     - name: find the state file path
-      run: terraform state list
+      run: |
+           terraform state list
+           ls -l
+           pwd
+
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: taint a resource
       run: terraform taint "azurerm_virtual_network.example22" 
