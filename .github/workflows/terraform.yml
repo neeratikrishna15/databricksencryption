@@ -78,13 +78,13 @@ jobs:
       run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p=${{ secrets.PERSONAL_ARM_CLIENT_SECRET }} --tenant $ARM_TENANT_ID
     - name: az show
       run: az account show
-    - name: find the state file path
-      run: terraform state list
+    
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-
+    - name: find the state file path
+      run: terraform state list
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: taint a resource
       run: terraform taint "azurerm_virtual_network.example22" 
