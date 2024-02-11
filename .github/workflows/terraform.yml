@@ -85,8 +85,8 @@ jobs:
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: taint a resource
-      run: terraform state rm "azurerm_virtual_network.example22" 
+    #- name: taint a resource
+    #  run: terraform state rm "azurerm_virtual_network.example22" 
     # Generates an execution plan for Terraform
     - name: Terraform Plan -output tfplan
       run: terraform plan -input=false -out tfplan
