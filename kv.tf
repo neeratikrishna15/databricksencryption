@@ -76,10 +76,12 @@ resource "azurerm_key_vault_access_policy" "example4" {
     "Get","List"
   ]
 }
+
+
 resource "azurerm_key_vault_access_policy" "example5" {
   key_vault_id = azurerm_key_vault.example.id
   tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = azurerm_databricks_workspace.workspac02.managed_disk_identity[0].principal_id
+  object_id = azurerm_databricks_workspace.workspac02.managed_disk_identity.principal_id
 
   depends_on = [ azurerm_key_vault.example ]
   key_permissions = [
