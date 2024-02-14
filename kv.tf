@@ -93,19 +93,3 @@ resource "azurerm_key_vault_access_policy" "example5" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "example6" {
-  key_vault_id = azurerm_key_vault.example.id
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = "02c16d1d-fd1d-4a86-a1ac-1cb048992338"
-  depends_on = [ azurerm_key_vault.example ]
-  key_permissions = [
-      "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy",
-      
-    ]
-
-  secret_permissions = [
-    "Get","List"
-  ]
-}
-
-#02c16d1d-fd1d-4a86-a1ac-1cb048992338
