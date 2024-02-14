@@ -38,3 +38,8 @@ resource "databricks_workspace_conf" "workspac02" {
 
   depends_on = [data.azurerm_databricks_workspace.workspac02]
 }
+
+ resource "azurerm_databricks_workspace_root_dbfs_customer_managed_key" "workspac02" {
+  workspace_id     = azurerm_databricks_workspace.workspac02.id
+  key_vault_key_id = azurerm_key_vault_key.DatabricksDBFSKey.id
+} 
