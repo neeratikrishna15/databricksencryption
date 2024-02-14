@@ -25,3 +25,16 @@ resource "azurerm_databricks_workspace" "workspac02" {
   }
 }
 
+data "azurerm_databricks_workspace" "workspac02" {
+  name                = azurerm_databricks_workspace.workspac02.name
+  resource_group_name = azurerm_databricks_workspace.workspac02.resource_group_name
+}
+
+
+resource "databricks_workspace_conf" "workspac02" {
+  custom_config = {
+    "storeInteractiveNotebookResultsInCustomerAccount" = true
+  }
+
+  depends_on = [data.azurerm_databricks_workspace.workspac02]
+}
