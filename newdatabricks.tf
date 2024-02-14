@@ -4,7 +4,7 @@ resource "azurerm_databricks_workspace" "workspac02" {
   location            = azurerm_resource_group.example.location
   sku                 = "premium"
   public_network_access_enabled = true
-  managed_resource_group_name   = "rg-managed-dbw-ds01"
+  managed_resource_group_name   = "rg-managed-dbw-ds02"
   //customer_managed_key_enabled                        = true
   //managed_services_cmk_key_vault_key_id               = azurerm_key_vault_key.DatabricksManagedServicesKey.id
   //managed_disk_cmk_key_vault_key_id                   = azurerm_key_vault_key.DatabricksClusterDiskKey.id
