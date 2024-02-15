@@ -30,7 +30,7 @@ data "azurerm_databricks_workspace" "workspac02" {
   resource_group_name = azurerm_databricks_workspace.workspac02.resource_group_name
 }
 
-
+#testing
 resource "databricks_workspace_conf" "workspac02" {
   custom_config = {
     "storeInteractiveNotebookResultsInCustomerAccount" = true
