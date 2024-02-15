@@ -4,7 +4,7 @@ resource "azurerm_databricks_workspace" "workspac03" {
   location            = azurerm_resource_group.example.location
   sku                 = "premium"
   public_network_access_enabled = true
-  managed_resource_group_name   = "rg-managed-dbw-ds02"
+  managed_resource_group_name   = "rg-managed-dbw-ds03"
   customer_managed_key_enabled                        = true
   managed_services_cmk_key_vault_key_id               = azurerm_key_vault_key.DatabricksManagedServicesKey.id
   managed_disk_cmk_key_vault_key_id                   = azurerm_key_vault_key.DatabricksClusterDiskKey.id
@@ -30,13 +30,13 @@ data "azurerm_databricks_workspace" "workspac03" {
   resource_group_name = azurerm_databricks_workspace.workspac03.resource_group_name
 }
 
-resource "databricks_workspace_conf" "workspac03" {
-  custom_config = {
-    "storeInteractiveNotebookResultsInCustomerAccount" = true
-  }
+# resource "databricks_workspace_conf" "workspac03" {
+#   custom_config = {
+#     "storeInteractiveNotebookResultsInCustomerAccount" = true
+#   }
 
-  depends_on = [data.azurerm_databricks_workspace.workspac03]
-}
+#   depends_on = [data.azurerm_databricks_workspace.workspac03]
+# }
 
  resource "azurerm_databricks_workspace_root_dbfs_customer_managed_key" "workspac03" {
   workspace_id     = azurerm_databricks_workspace.workspac03.id
