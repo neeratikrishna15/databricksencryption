@@ -18,7 +18,7 @@ resource "azurerm_databricks_workspace" "workspac02" {
     private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private.id
     nat_gateway_name                                     = null
     public_ip_name                                       = null
-    no_public_ip                                         = true
+    no_public_ip                                         = false
     storage_account_name                                 = null
     storage_account_sku_name                             = null
   
