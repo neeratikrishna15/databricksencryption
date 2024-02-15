@@ -22,7 +22,7 @@ resource "azurerm_key_vault_key" "DatabricksClusterDiskKey" {
     "wrapKey",
   ]
 
- # depends_on = [azurerm_key_vault_access_policy.databricks_appid_keyvault_policy]
+  depends_on = [azurerm_key_vault_access_policy.example2]
 
 }
 
@@ -49,7 +49,7 @@ resource "azurerm_key_vault_key" "DatabricksDBFSKey" {
     "wrapKey",
   ]
 
-#  depends_on = [azurerm_key_vault_access_policy.databricks_appid_keyvault_policy]
+ depends_on = [azurerm_key_vault_access_policy.example2]
 
 }
 
@@ -76,6 +76,6 @@ resource "azurerm_key_vault_key" "DatabricksManagedServicesKey" {
     "verify",
     "wrapKey",
   ]
-
+ depends_on = [azurerm_key_vault_access_policy.example2]
  
 }
