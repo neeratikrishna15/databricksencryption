@@ -47,7 +47,7 @@ jobs:
 
     - name: Export SQL Database
       run: |
-        az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }}
+        az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-password 'sql@987654321' --admin-user 'sqladmin'                   
 
     - name: Import SQL Database
       run: |
