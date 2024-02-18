@@ -1,0 +1,25 @@
+name: Export and Import Azure SQL Database
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  export_and_import:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Export SQL Database
+      run: az sql db export -s source_sql_server -n source_database -g resource_group --storage-key storage_account_key --storage-key-type StorageAccessKey --storage-uri storage_uri
+
+    - name: Import SQL Database
+      run: az sql db import -s target_sql_server -n target_database -g resource_group --storage-key storage_account_key --storage-key-type StorageAccessKey --storage-uri storage_uri --admin-password admin_password
