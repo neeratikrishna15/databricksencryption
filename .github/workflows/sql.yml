@@ -47,7 +47,9 @@ jobs:
 
     - name: Export SQL Database
       run: |
-        az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-password 'sql@987654321' --admin-user 'sqladmin'                   
+        # az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-password 'sql@987654321' --admin-user 'sqladmin'                   
+        az storage blob delete --container-name sqlexport --name myfile2.bacpac --account-name ngkterraform4517 --account-key "***REMOVED***"
+        az sql db export -s ngksourcesql99 -n ngksourcesql99 -g newrg --admin-user sqladmin --admin-password sql@987654321 --storage-key-type StorageAccessKey --storage-uri https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.bacpac --storage-key "***REMOVED***"
 
     #- name: Import SQL Database
     #  run: |
