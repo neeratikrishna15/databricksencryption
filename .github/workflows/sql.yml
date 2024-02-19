@@ -17,7 +17,7 @@ jobs:
      ARM_CLIENT_SECRET: ${{ secrets.PERSONAL_ARM_CLIENT_SECRET }}
      ARM_SUBSCRIPTION_ID: ac7b009e-5876-4ffe-8832-73ad9124d63f
      ARM_TENANT_ID: 051f26d8-2bfb-447a-a6b2-d04a33c5afa6
-     SOURCE_SQL_SERVER: 'ngksourcesql99.database.windows.net'
+     SOURCE_SQL_SERVER: 'ngksourcesql99'
      SOURCE_DATABASE: 'ngksourcesql99'
      S_RESOURCE_GROUP: 'newrg'
      TARGET_SQL_SERVER: 'sqltarget451701'
