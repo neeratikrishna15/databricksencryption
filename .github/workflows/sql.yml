@@ -24,7 +24,7 @@ jobs:
       TARGET_DATABASE: 'sqltarget451701'
       D_RESOURCE_GROUP: 'targetdb'
       STORAGE_ACCOUNT_KEY: '***REMOVED***'
-      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H%M%S").bacpac'
+      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H").bacpac'
       ADMIN_PASSWORD: 'sql@987654321'
       STORAGE_KEY: "***REMOVED***"
 
