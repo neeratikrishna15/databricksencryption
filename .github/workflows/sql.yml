@@ -13,20 +13,20 @@ jobs:
     name: 'Login'
     runs-on: ubuntu-latest
     env: 
-     ARM_CLIENT_ID: 485f45e2-a017-4b10-bd25-f1476ea05be1
-     ARM_CLIENT_SECRET: ${{ secrets.PERSONAL_ARM_CLIENT_SECRET }}
-     ARM_SUBSCRIPTION_ID: ac7b009e-5876-4ffe-8832-73ad9124d63f
-     ARM_TENANT_ID: 051f26d8-2bfb-447a-a6b2-d04a33c5afa6
-     SOURCE_SQL_SERVER: 'ngksourcesql99'
-     SOURCE_DATABASE: 'ngksourcesql99'
-     S_RESOURCE_GROUP: 'newrg'
-     TARGET_SQL_SERVER: 'sqltarget451701'
-     TARGET_DATABASE: 'sqltarget451701'
-     D_RESOURCE_GROUP: 'targetrg'
-     STORAGE_ACCOUNT_KEY: '***REMOVED***'
-     STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.bacpac'
-     ADMIN_PASSWORD: 'sql@987654321'
-     STORAGE_KEY: "***REMOVED***"
+      ARM_CLIENT_ID: 485f45e2-a017-4b10-bd25-f1476ea05be1
+      ARM_CLIENT_SECRET: ${{ secrets.PERSONAL_ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ac7b009e-5876-4ffe-8832-73ad9124d63f
+      ARM_TENANT_ID: 051f26d8-2bfb-447a-a6b2-d04a33c5afa6
+      SOURCE_SQL_SERVER: 'ngksourcesql99'
+      SOURCE_DATABASE: 'ngksourcesql99'
+      S_RESOURCE_GROUP: 'newrg'
+      TARGET_SQL_SERVER: 'sqltarget451701'
+      TARGET_DATABASE: 'sqltarget451701'
+      D_RESOURCE_GROUP: 'targetrg'
+      STORAGE_ACCOUNT_KEY: '***REMOVED***'
+      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H%M%S").bacpac'
+      ADMIN_PASSWORD: 'sql@987654321'
+      STORAGE_KEY: "***REMOVED***"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -34,25 +34,19 @@ jobs:
         shell: bash
 
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
-    # Az login 
-    - name: Install Az
-      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    - name: Az login
-      run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p=${{ secrets.PERSONAL_ARM_CLIENT_SECRET }} --tenant $ARM_TENANT_ID
-    - name: az show
-      run: az account show
-    
-
-    - name: Export SQL Database
-      run: |
-        
-        az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
-
-    - name: Import SQL Database
-      run: |
-        az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
-    # az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-password 'sql@987654321' --admin-user 'sqladmin'                   
-    # az storage blob delete --container-name sqlexport --name myfile2.bacpac --account-name ngkterraform4517  --account-key "***REMOVED***"
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Az login 
+      - name: Install Az
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - name: Az login
+        run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p=${{ secrets.PERSONAL_ARM_CLIENT_SECRET }} --tenant $ARM_TENANT_ID
+      - name: az show
+        run: az account show
+      - name: Export SQL Database
+        run: |
+          az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
+      - name: Import SQL Database
+        run: |
+          az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_ACCOUNT_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
