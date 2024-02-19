@@ -48,7 +48,7 @@ jobs:
 
     - name: Export SQL Database
       run: |
-        az storage blob delete --container-name sqlexport --name myfile2.bacpac --account-name ngkterraform4517  --storage-key "***REMOVED***"
+        az storage blob delete --container-name sqlexport --name myfile2.bacpac --account-name ngkterraform4517  --account-key "***REMOVED***"
         az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --account-key ${{ env.STORAGE_KEY }}
 
     #- name: Import SQL Database
