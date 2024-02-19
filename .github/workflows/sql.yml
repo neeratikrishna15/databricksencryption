@@ -22,7 +22,7 @@ jobs:
      S_RESOURCE_GROUP: 'newrg'
      TARGET_SQL_SERVER: 'sqltarget451701'
      TARGET_DATABASE: 'sqltarget451701'
-     RESOURCE_GROUP: 'targetrg'
+     D_RESOURCE_GROUP: 'targetrg'
      STORAGE_ACCOUNT_KEY: '***REMOVED***'
      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.bacpac'
      ADMIN_PASSWORD: 'sql@987654321'
