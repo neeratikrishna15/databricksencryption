@@ -44,6 +44,11 @@ jobs:
         run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p=${{ secrets.PERSONAL_ARM_CLIENT_SECRET }} --tenant $ARM_TENANT_ID
       - name: az show
         run: az account show
+      - name: Check if file exists and delete if necessary
+        run: |
+          if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport" --name myfile2.$(date "+%Y%m%d%H").bacpac; then
+             az storage blob delete --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport"  --name myfile2.$(date "+%Y%m%d%H").bacpac --yes
+          fi  
       - name: Export SQL Database
         run: |
           az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
