@@ -24,29 +24,38 @@ jobs:
       TARGET_DATABASE: 'sqltarget451701'
       D_RESOURCE_GROUP: 'targetdb'
       STORAGE_ACCOUNT_KEY: '***REMOVED***'
-      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H").bacpac'
+      STORAGE_ACCOUNT_NAME: 'your_storage_account_name_here'
+      STORAGE_URI: 'https://${{ env.STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H").bacpac'
       ADMIN_PASSWORD: 'sql@987654321'
       STORAGE_KEY: "***REMOVED***"
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
 
     steps:
-      # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v3
-      # Az login 
+
       - name: Install Az
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
       - name: Az login
         run: az login --allow-no-subscriptions --service-principal -u $ARM_CLIENT_ID -p=${{ secrets.PERSONAL_ARM_CLIENT_SECRET }} --tenant $ARM_TENANT_ID
+
       - name: az show
         run: az account show
+
+      - name: Check if file exists and delete if necessary
+        run: |
+          if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name sqlexport --name myfile2.$(date "+%Y%m%d%H").bacpac; then
+            az storage blob delete --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name sqlexport --name myfile2.$(date "+%Y%m%d%H").bacpac --yes
+          fi
+
       - name: Export SQL Database
         run: |
           az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
+
       - name: Import SQL Database
         run: |
           az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
