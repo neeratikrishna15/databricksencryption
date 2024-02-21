@@ -47,8 +47,8 @@ jobs:
         run: az account show
       - name: Check if file exists and delete if necessary
         run: |
-          if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport" --name myfile2.bacpac; then
-             az storage blob move --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport"  -s myfile2.bacpac -d myfile2.$(date "+%Y%m%d%H%M%S").bacpac
+          if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport" --name myfile2.bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }}; then
+             az storage blob move --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport"  -s myfile2.bacpac -d myfile2.$(date "+%Y%m%d%H%M%S").bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }} 
           fi  
       # - name: Export SQL Database
       #   run: |
