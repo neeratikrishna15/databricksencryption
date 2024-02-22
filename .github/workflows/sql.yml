@@ -56,7 +56,7 @@ jobs:
           az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
       - name: Delete tables in target database
         run: |
-          az sql db delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }}
+          az sql db delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} --yes
           
       
       - name: Import SQL Database
