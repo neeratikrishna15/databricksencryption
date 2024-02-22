@@ -61,5 +61,5 @@ jobs:
       
       - name: Import SQL Database
         run: |
-          az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
+          az sql db import -s ${{ env.TARGET_SQL_SERVER }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
 # az sql db delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} --query [].name -o tsv | xargs -I {} az sql db table delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -d ${{ env.TARGET_DATABASE }} -n {}
