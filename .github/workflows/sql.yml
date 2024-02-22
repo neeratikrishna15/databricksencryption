@@ -24,7 +24,7 @@ jobs:
       TARGET_DATABASE: 'sqltarget451701'
       D_RESOURCE_GROUP: 'targetdb'
       STORAGE_ACCOUNT_KEY: '***REMOVED***'
-      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.$(date "+%Y%m%d%H").bacpac'
+      STORAGE_URI: 'https://ngkterraform4517.blob.core.windows.net/sqlexport/myfile2.bacpac'
       ADMIN_PASSWORD: 'sql@987654321'
       STORAGE_KEY: "***REMOVED***"
       STORAGE_ACCOUNT_NAME: 'ngkterraform4517'
@@ -50,13 +50,13 @@ jobs:
           if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport" --name myfile2.bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }}; then
              az storage blob copy start --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --source-container "sqlexport" --destination-container "sqlexport"  --source-blob myfile2.bacpac --destination-blob myfile2.$(date "+%Y%m%d%H%M%S").bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }} 
           fi  
-      # - name: Export SQL Database
-      #   run: |
-      #     az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
-      # - name: Delete tables in target database
-      #   run: |
-      #     az sql db list-tables -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} --query [].name -o tsv | xargs -I {} az sql db table delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -d ${{ env.TARGET_DATABASE }} -n {}
+      - name: Export SQL Database
+        run: |
+          az sql db export -s ${{ env.SOURCE_SQL_SERVER }} -n ${{ env.SOURCE_DATABASE }} -g ${{ env.S_RESOURCE_GROUP }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --storage-key ${{ env.STORAGE_KEY }}
+      - name: Delete tables in target database
+        run: |
+          az sql db list-tables -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} --query [].name -o tsv | xargs -I {} az sql db table delete -g ${{ env.D_RESOURCE_GROUP }} -s ${{ env.TARGET_SQL_SERVER }} -d ${{ env.TARGET_DATABASE }} -n {}
       
-      # - name: Import SQL Database
-      #   run: |
-      #     az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
+      - name: Import SQL Database
+        run: |
+          az sql db import -s ${{ env.TARGET_SQL_SERVER }} -n ${{ env.TARGET_DATABASE }} -g ${{ env.D_RESOURCE_GROUP }} --storage-key ${{ env.STORAGE_KEY }} --storage-key-type StorageAccessKey --storage-uri ${{ env.STORAGE_URI }} --admin-user sqladmin --admin-password ${{ env.ADMIN_PASSWORD }}
