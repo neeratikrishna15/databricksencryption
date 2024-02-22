@@ -49,6 +49,7 @@ jobs:
         run: |
           if az storage blob exists --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport" --name myfile2.bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }}; then
              az storage blob copy start --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --source-container "sqlexport" --destination-container "sqlexport"  --source-blob myfile2.bacpac --destination-blob myfile2.$(date "+%Y%m%d%H%M%S").bacpac --account-key ${{ env.STORAGE_ACCOUNT_KEY }} 
+             az storage blob delete --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name "sqlexport"  --name  myfile2.bacpac  --account-key ${{ env.STORAGE_ACCOUNT_KEY }} 
           fi  
       - name: Export SQL Database
         run: |
