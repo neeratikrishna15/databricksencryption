@@ -8,4 +8,4 @@ def encrypt(public_key: str, secret_value: str) -> str:
     return b64encode(encrypted).decode("utf-8")
 
 
-encrypt("N3bJcftDP0/ykmYngCHu6oJsSEnvHa8HBxSRuR1kAGo=", "***REMOVED***")
+encrypt("N3bJcftDP0/ykmYngCHu6oJsSEnvHa8HBxSRuR1kAGo=", "${{ secrets.TOKEN }}")
