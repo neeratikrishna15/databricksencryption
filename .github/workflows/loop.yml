@@ -1,4 +1,4 @@
-name: Sync Secrets 22
+name: Loop workflow
 
 on:
   push:
