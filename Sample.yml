@@ -1,4 +1,4 @@
-name: Loop workflow
+name: Get Secrets by Environment
 
 on:
   push:
@@ -6,47 +6,33 @@ on:
       - main  # Or specify the branch you want to trigger this workflow
 
 jobs:
-  sync-secrets:
+  get-secrets:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Install Python and pip
+      # Add any necessary setup steps here, such as installing required dependencies
+
+      - name: Retrieve and process secrets by environment
         run: |
-          sudo apt update
-          sudo apt install -y python3 python3-pip
+          # Define the list of environments
+          environments=("development" "staging" "production")
 
-      - name: Install PyNaCl
-        run: |
-          sudo pip install pynacl
-
-      - name: Retrieve environment secrets
-        run: |
-          # Retrieve the list of environment secrets
-          secrets=$(curl --location --request GET \
-          'https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets' \
-          --header 'Authorization: Bearer ${{ secrets.TOKEN }}' | jq -r '.secrets[].name')
-
-          # Loop through each environment secret
-          for secret_name in $secrets; do
-            # Retrieve the value of the environment secret
-            secret_value=$(curl --location --request GET \
-            "https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets/$secret_name" \
-            --header 'Authorization: Bearer ${{ secrets.TOKEN }}' | jq -r '.encrypted_value')
-
-            # Create a similar environment in the destination repository
-            curl --location --request PUT \
-            "https://api.github.com/repos/neeratikrishna15/dev-environment/environments/$secret_name" \
-            --header 'Authorization: Bearer ${{ secrets.TOKEN }}' \
-            --header 'Content-Type: application/json' \
-            --data-raw "{\"name\":\"$secret_name\"}"
-
-            # Copy the secret to the corresponding environment in the destination repository
-            curl --location --request PUT \
-            "https://api.github.com/repos/neeratikrishna15/dev-environment/actions/secrets/$secret_name" \
-            --header 'Authorization: Bearer ${{ secrets.TOKEN }}' \
-            --header 'Content-Type: application/json' \
-            --data-raw "{\"encrypted_value\":\"$secret_value\",\"key_id\":\"3380204578043523366\"}"
+          # Loop through each environment
+          for env in "${environments[@]}"; do
+            echo "Retrieving secrets for environment: $env"
+            
+            # Retrieve the list of secrets for the current environment
+            secrets=$(curl --location --request GET \
+              "https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets?environment=$env" \
+              --header "Authorization: Bearer ${{ secrets.TOKEN }}" | jq -r '.secrets[].name')
+            
+            # Loop through each secret and perform actions (e.g., print, store, etc.)
+            for secret_name in $secrets; do
+              echo "Secret name: $secret_name"
+              
+              # Perform additional actions as needed, such as storing secret values, etc.
+            done
           done
