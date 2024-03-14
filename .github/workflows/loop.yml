@@ -1,0 +1,30 @@
+name: Sync Secrets 22
+
+on:
+  push:
+    branches:
+      - main  # Or specify the branch you want to trigger this workflow
+
+jobs:
+  sync-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Python and pip
+        run: |
+          sudo apt update
+          sudo apt install -y python3 python3-pip
+
+      - name: Install PyNaCl
+        run: |
+          sudo pip install pynacl
+
+
+      - name: Verify updated secret
+        run: |
+          curl --location --request GET \
+          'https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets' \
+          --header 'Authorization: Bearer ${{ secrets.TOKEN }}'
