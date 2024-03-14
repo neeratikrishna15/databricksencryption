@@ -22,9 +22,24 @@ jobs:
         run: |
           sudo pip install pynacl
 
-
-      - name: Verify updated secret
+      - name: Retrieve and create dev environment secrets
         run: |
-          curl --location --request GET \
+          # Retrieve the list of secrets
+          secrets=$(curl --location --request GET \
           'https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets' \
-          --header 'Authorization: Bearer ${{ secrets.TOKEN }}'
+          --header 'Authorization: Bearer ${{ secrets.TOKEN }}' | jq -r '.secrets[].name')
+
+          # Loop through each secret
+          for secret_name in $secrets; do
+            # Retrieve the value of the secret
+            secret_value=$(curl --location --request GET \
+            "https://api.github.com/repos/neeratikrishna15/databricksencryption/actions/secrets/$secret_name" \
+            --header 'Authorization: Bearer ${{ secrets.TOKEN }}' | jq -r '.encrypted_value')
+
+            # Create a corresponding dev environment secret with the same name
+            curl --location --request PUT \
+            "https://api.github.com/repos/neeratikrishna15/dev-environment/actions/secrets/$secret_name" \
+            --header 'Authorization: Bearer ${{ secrets.TOKEN }}' \
+            --header 'Content-Type: application/json' \
+            --data-raw "{\"encrypted_value\":\"$secret_value\",\"key_id\":\"3380204578043523366\"}"
+          done
