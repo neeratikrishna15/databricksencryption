@@ -57,10 +57,10 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     env: 
-     ARM_CLIENT_ID: 485f45e2-a017-4b10-bd25-f1476ea05be1
+     ARM_CLIENT_ID: 32197db9-d066-488e-9ff0-8b660314c7a3
      ARM_CLIENT_SECRET: ${{ secrets.PERSONAL_ARM_CLIENT_SECRET }}
-     ARM_SUBSCRIPTION_ID: ac7b009e-5876-4ffe-8832-73ad9124d63f
-     ARM_TENANT_ID: 051f26d8-2bfb-447a-a6b2-d04a33c5afa6
+     ARM_SUBSCRIPTION_ID: ae9c5525-c6a1-4973-b941-333c5f0e41e1
+     ARM_TENANT_ID: 9a287dac-26b9-4148-a845-501b1f6ee806
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
