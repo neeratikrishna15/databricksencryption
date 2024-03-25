@@ -6,7 +6,7 @@ import re
 sensitive_patterns = [
     r"password\s*=\s*['\"].*?['\"]",
     r"api_key\s*=\s*['\"].*?['\"]",
-    # Add more patterns as needed
+    "J_F8Q~kDSlBCY-0Tqx2FrWfsoUD~NNCAy55mgbdJ"
 ]
 
 for line in sys.stdin:
